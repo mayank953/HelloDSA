@@ -2,19 +2,21 @@
 
 Recursion on lists: shrink the list by one element, trust the recursive call, and combine. Sum, sorted check, first and last index, and four ways to collect all indices (print, pass a list down, use a global list, return a new list).
 
+**Video:** starts at [`2:50:40`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=10240s)
+
 ## Chapters
 
 | Time | Chapter | Code and notes |
 |------|---------|----------------|
-| `2:50:40` | Recursion with arrays: shrinking the problem | [📄 `recursion-and-arrays.pdf`](notes/recursion-and-arrays.pdf) |
-| `3:00:55` | Sum of an array | [💻 `01-sum-of-array.py`](code/01-sum-of-array.py) |
-| `3:30:15` | Check if an array is sorted | [💻 `02-check-if-array-is-sorted.py`](code/02-check-if-array-is-sorted.py) |
-| `3:54:50` | First and last index of an element | [💻 `03-first-and-last-index.py`](code/03-first-and-last-index.py) |
-| `4:20:06` | All indices of a number | [💻 `04-all-indices-of-a-number.py`](code/04-all-indices-of-a-number.py) |
-| `4:32:00` | Optimisation: pass an index instead of slicing | [💻 `04-all-indices-of-a-number.py`](code/04-all-indices-of-a-number.py) |
-| `4:43:30` | Collecting answers in a list passed down | [💻 `05-collect-indices-in-a-passed-list.py`](code/05-collect-indices-in-a-passed-list.py) |
-| `4:58:30` | Collecting answers in a global list | [💻 `06-collect-indices-in-a-global-list.py`](code/06-collect-indices-in-a-global-list.py) |
-| `5:04:55` | Returning a new list | [💻 `07-return-indices-as-a-new-list.py`](code/07-return-indices-as-a-new-list.py) |
+| [`2:50:40`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=10240s) | Recursion with arrays: shrinking the problem | [📄 `recursion-and-arrays.pdf`](notes/recursion-and-arrays.pdf) |
+| [`3:00:55`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=10855s) | Sum of an array | [💻 `01-sum-of-array.py`](code/01-sum-of-array.py) |
+| [`3:30:15`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=12615s) | Check if an array is sorted | [💻 `02-check-if-array-is-sorted.py`](code/02-check-if-array-is-sorted.py) |
+| [`3:54:50`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=14090s) | First and last index of an element | [💻 `03-first-and-last-index.py`](code/03-first-and-last-index.py) |
+| [`4:20:06`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=15606s) | All indices of a number | [💻 `04-all-indices-of-a-number.py`](code/04-all-indices-of-a-number.py) |
+| [`4:32:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=16320s) | Optimisation: pass an index instead of slicing | [💻 `04-all-indices-of-a-number.py`](code/04-all-indices-of-a-number.py) |
+| [`4:43:30`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=17010s) | Collecting answers in a list passed down | [💻 `05-collect-indices-in-a-passed-list.py`](code/05-collect-indices-in-a-passed-list.py) |
+| [`4:58:30`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=17910s) | Collecting answers in a global list | [💻 `06-collect-indices-in-a-global-list.py`](code/06-collect-indices-in-a-global-list.py) |
+| [`5:04:55`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=18295s) | Returning a new list | [💻 `07-return-indices-as-a-new-list.py`](code/07-return-indices-as-a-new-list.py) |
 
 ## Files
 

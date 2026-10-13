@@ -2,17 +2,19 @@
 
 Linear and binary search written recursively, then merge sort and quick sort: how to divide the problem, what the recursive call returns, and how to merge or partition. Starter scaffolds are included so you can fill in `Merge` and `partitionFunction` yourself.
 
+**Video:** starts at [`5:35:08`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=20108s)
+
 ## Chapters
 
 | Time | Chapter | Code and notes |
 |------|---------|----------------|
-| `5:35:08` | Linear search with recursion | [💻 `01-linear-search.py`](code/01-linear-search.py) |
-| `5:50:54` | Binary search with recursion | [💻 `02-binary-search.py`](code/02-binary-search.py) |
-| `6:12:30` | Merge sort: the idea | [🧩 `03-merge-sort-starter.py`](code/03-merge-sort-starter.py) |
-| `6:27:56` | Merge sort: the approach step by step | [🧩 `03-merge-sort-starter.py`](code/03-merge-sort-starter.py) |
-| `6:40:05` | Merge sort: code and debugging | [💻 `04-merge-sort.py`](code/04-merge-sort.py) |
-| `7:11:17` | Quick sort: pivot and partition | [🧩 `05-quick-sort-starter.py`](code/05-quick-sort-starter.py) |
-| `7:25:10` | Quick sort: code | [💻 `06-quick-sort.py`](code/06-quick-sort.py) |
+| [`5:35:08`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=20108s) | Linear search with recursion | [💻 `01-linear-search.py`](code/01-linear-search.py) |
+| [`5:50:54`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=21054s) | Binary search with recursion | [💻 `02-binary-search.py`](code/02-binary-search.py) |
+| [`6:12:30`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=22350s) | Merge sort: the idea | [🧩 `03-merge-sort-starter.py`](code/03-merge-sort-starter.py) |
+| [`6:27:56`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=23276s) | Merge sort: the approach step by step | [🧩 `03-merge-sort-starter.py`](code/03-merge-sort-starter.py) |
+| [`6:40:05`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=24005s) | Merge sort: code and debugging | [💻 `04-merge-sort.py`](code/04-merge-sort.py) |
+| [`7:11:17`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=25877s) | Quick sort: pivot and partition | [🧩 `05-quick-sort-starter.py`](code/05-quick-sort-starter.py) |
+| [`7:25:10`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=26710s) | Quick sort: code | [💻 `06-quick-sort.py`](code/06-quick-sort.py) |
 
 ## Files
 

@@ -2,21 +2,23 @@
 
 Strings and recursion: removing characters, palindromes, subsequences (take or skip), permutations (the plate analogy), decoding digit strings, phone keypad words, and the Tower of Hanoi. Each problem appears as a print version and a return version where it matters.
 
+**Video:** starts at [`7:46:50`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=28010s)
+
 ## Chapters
 
 | Time | Chapter | Code and notes |
 |------|---------|----------------|
-| `7:46:50` | Recursion with strings: remove a character | [💻 `01-remove-a-character.py`](code/01-remove-a-character.py) · [📄 `recursion-strings-and-questions.pdf`](notes/recursion-strings-and-questions.pdf) |
-| `8:03:10` | Palindrome check | [💻 `02-palindrome.py`](code/02-palindrome.py) |
-| `8:30:09` | Substring vs subsequence | [🧩 `03-strings-substring-subsequence-starter.py`](code/03-strings-substring-subsequence-starter.py) |
-| `8:36:04` | Print all subsequences | [💻 `04-print-all-subsequences.py`](code/04-print-all-subsequences.py) |
-| `8:55:10` | Return all subsequences | [💻 `05-return-all-subsequences.py`](code/05-return-all-subsequences.py) |
-| `9:11:19` | Permutations: print them | [💻 `06-print-permutations.py`](code/06-print-permutations.py) |
-| `9:34:25` | Permutations: return them | [💻 `07-return-permutations.py`](code/07-return-permutations.py) |
-| `9:50:00` | Return all codes | [💻 `08-return-all-codes.py`](code/08-return-all-codes.py) |
-| `10:28:10` | Words from a phone number | [💻 `09-words-from-a-phone-number.py`](code/09-words-from-a-phone-number.py) |
-| `10:49:58` | Tower of Hanoi | [💻 `10-tower-of-hanoi.py`](code/10-tower-of-hanoi.py) |
-| `11:08:12` | Wrap-up | — |
+| [`7:46:50`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=28010s) | Recursion with strings: remove a character | [💻 `01-remove-a-character.py`](code/01-remove-a-character.py) · [📄 `recursion-strings-and-questions.pdf`](notes/recursion-strings-and-questions.pdf) |
+| [`8:03:10`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=28990s) | Palindrome check | [💻 `02-palindrome.py`](code/02-palindrome.py) |
+| [`8:30:09`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=30609s) | Substring vs subsequence | [🧩 `03-strings-substring-subsequence-starter.py`](code/03-strings-substring-subsequence-starter.py) |
+| [`8:36:04`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=30964s) | Print all subsequences | [💻 `04-print-all-subsequences.py`](code/04-print-all-subsequences.py) |
+| [`8:55:10`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=32110s) | Return all subsequences | [💻 `05-return-all-subsequences.py`](code/05-return-all-subsequences.py) |
+| [`9:11:19`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=33079s) | Permutations: print them | [💻 `06-print-permutations.py`](code/06-print-permutations.py) |
+| [`9:34:25`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=34465s) | Permutations: return them | [💻 `07-return-permutations.py`](code/07-return-permutations.py) |
+| [`9:50:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=35400s) | Return all codes | [💻 `08-return-all-codes.py`](code/08-return-all-codes.py) |
+| [`10:28:10`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=37690s) | Words from a phone number | [💻 `09-words-from-a-phone-number.py`](code/09-words-from-a-phone-number.py) |
+| [`10:49:58`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=38998s) | Tower of Hanoi | [💻 `10-tower-of-hanoi.py`](code/10-tower-of-hanoi.py) |
+| [`11:08:12`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=40092s) | Wrap-up | — |
 
 ## Files
 

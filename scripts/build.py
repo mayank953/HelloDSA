@@ -31,15 +31,18 @@ from nbformat import v4
 
 sys.path.insert(0, str(Path(__file__).parent))
 import assignments as asg  # noqa: E402
+import handbook as hb  # noqa: E402
+import handbook_meta as hbm  # noqa: E402
 import curriculum as cur  # noqa: E402
 
-REPO_NAME = "hello-dsa"
+REPO_NAME = "HelloDSA"
 REPO_URL = f"https://github.com/mayank953/{REPO_NAME}"
 PY_REPO = "https://github.com/mayank953/python-ai-crash-course"
 HASHTAG = "#HelloDSA"
-VIDEO_URL = ""          # set from --video-url
+VIDEO_URL = ""          # set from --video-url (default below)
+DEFAULT_VIDEO_URL = "https://www.youtube.com/watch?v=BhaHEnpNujI"
 MAX_OUTPUT_CHARS = 20_000
-GENERATED = ["recursion", "dsa-topics", "assignments", "roadmap", "README.md", "INDEX.md",
+GENERATED = ["recursion", "dsa-topics", "assignments", "roadmap", "handbook", "README.md", "INDEX.md",
              "LICENSE", "CONTRIBUTING.md", ".gitignore", "requirements.txt"]
 ICON = {cur.CODE: "💻", cur.TEMPLATE: "🧩", cur.NOTEBOOK: "📓", cur.NOTES: "📄", cur.SOLUTION: "✅"}
 LABEL = {cur.CODE: "Code", cur.TEMPLATE: "Starter / assignment", cur.NOTEBOOK: "Notebook",
@@ -327,9 +330,9 @@ def run_cells(ns, cells, tag="cell"):
 
 def verify_assignments():
     count = 0
-    for a in asg.ASSIGNMENTS:
+    for a in asg.ASSIGNMENTS + asg.PRACTICE_SETS:
         ns = {}
-        exec_setup(ns)
+        run_cells(ns, [a.get("setup", asg.SETUP)], "setup")
         for n, p in enumerate(a["problems"], 1):
             count += 1
             try:
@@ -345,15 +348,13 @@ def verify_assignments():
     return count
 
 
-def exec_setup(ns):
-    run_cells(ns, [asg.SETUP], "setup")
-
-
 def build_assignments(repo):
     a_dir = repo / "assignments"
     s_dir = a_dir / "solutions"
     s_dir.mkdir(parents=True, exist_ok=True)
-    for a in asg.ASSIGNMENTS:
+    for a in asg.ASSIGNMENTS + asg.PRACTICE_SETS:
+        setup_code = a.get("setup", asg.SETUP)
+        covers = a.get("topic") or a["chapters"]
         for solved in (False, True):
             nb = v4.new_notebook()
             nb.metadata["kernelspec"] = KERNEL
@@ -365,14 +366,14 @@ def build_assignments(repo):
                     "Run the setup cell first. Then replace each `...` with your code, run the cell, and run the check cell below it. "
                     "A green tick means you passed. Reference solutions are in the `solutions` folder, but try first.")
             nb.cells.append(v4.new_markdown_cell(
-                f"# {a['title']}{' (Solutions)' if solved else ''}\n\n**Covers:** {a['topic']}\n\n{a['intro']}\n\n{body}"))
+                f"# {a['title']}{' (Solutions)' if solved else ''}\n\n**Covers:** {covers}\n\n{a['intro']}\n\n{body}"))
             ns, counter = {}, 1
-            setup = v4.new_code_cell(asg.SETUP)
+            setup = v4.new_code_cell(setup_code)
             if solved:
-                run_cells(ns, [asg.SETUP], "setup")
+                run_cells(ns, [setup_code], "setup")
                 setup.execution_count = counter
                 counter += 1
-            nb.cells += [v4.new_markdown_cell("## Setup\n\nRun this cell once. It provides `check_recursive`, which the checks use."), setup]
+            nb.cells += [v4.new_markdown_cell("## Setup\n\nRun this cell once. It prepares what the problems and their checks need (for example the `check_recursive` helper or a `Node` class)."), setup]
             for n, p in enumerate(a["problems"], 1):
                 nb.cells.append(v4.new_markdown_cell(f"## Problem {n}: {p['title']}\n\n{p['prompt']}"))
                 code = p["solution"] if solved else p["starter"]
@@ -391,10 +392,16 @@ def build_assignments(repo):
     for a in asg.ASSIGNMENTS:
         rows.append(f"| {a['title'].split(': ', 1)[1]} | [{a['topic']}](../recursion/{next(t.folder for t in cur.TOPICS if t.key == a['after'])}/) | "
                     f"{len(a['problems'])} | [notebook]({a['id']}.ipynb) | [solutions](solutions/{a['id']}.ipynb) |")
+    sets = ["| Practice set | Covers | Problems | Starter | Solutions |", "|---|---|---|---|---|"]
+    for a in asg.PRACTICE_SETS:
+        sets.append(f"| {a['title'].split(': ', 1)[1]} | {a['chapters']} | {len(a['problems'])} | "
+                    f"[notebook]({a['id']}.ipynb) | [solutions](solutions/{a['id']}.ipynb) |")
     (a_dir / "README.md").write_text(
-        "# Checkpoint assignments\n\nOne assignment at the end of each recursion topic. Every problem has a blank to fill, "
-        "a check cell that tells you whether you got it right (and whether you really used recursion), and a reference solution.\n\n"
-        + "\n".join(rows) + "\n\n**How to use:** finish the topic, open the notebook, run the setup cell, solve the problems in order, "
+        "# Assignments\n\nEvery problem gives you a blank to fill, a check cell that tells you instantly whether you got it right, "
+        "and a reference solution in the `solutions` folder. Try first, then compare.\n\n"
+        "## Checkpoints: one per recursion topic\n\nThese also check that you really used recursion.\n\n"
+        + "\n".join(rows) + "\n\n## Practice sets: the rest of the handbook\n\n"
+        + "\n".join(sets) + "\n\n**How to use:** finish the topic or chapter, open the notebook, run the setup cell, solve the problems in order, "
         "and only then look at the solutions.\n\n[Course home](../README.md)\n", encoding="utf-8")
 
 
@@ -454,14 +461,117 @@ def resource_rows():
     return "\n".join(rows)
 
 
+
+# ------------------------------------------------------------------ the handbook
+def build_handbook(repo):
+    src_dir = Path(__file__).parent / "handbook_src"
+    out = repo / "handbook"
+    (out / "code").mkdir(parents=True, exist_ok=True)
+    chapters = hbm.HANDBOOK
+    stats = {}
+    for i, ch in enumerate(chapters):
+        text = (src_dir / ch.filename).read_text(encoding="utf-8")
+        body, code, st = hb.render_chapter(ch, text)
+        stats[ch.num] = st
+        head = [f"# {int(ch.num)}. {ch.title}", "",
+                f"**{ch.part}** · {ch.level} · about {st['minutes']} minutes to read", "", f"> {ch.blurb}", ""]
+        extras = []
+        if ch.video and VIDEO_URL:
+            extras.append("**In the video:** " + " · ".join(f"{vid(t)} {label}" for t, label in ch.video))
+        if ch.related:
+            extras.append("**In this repo:** " + " · ".join(f"[{label}](../{path})" for label, path in ch.related))
+        extras.append(f"**Run the code from this chapter:** [`code/{ch.num}-{ch.slug}.py`](code/{ch.num}-{ch.slug}.py)")
+        nav = []
+        if i:
+            nav.append(f"[← {int(chapters[i - 1].num)}. {chapters[i - 1].title}]({chapters[i - 1].filename})")
+        nav.append("[Handbook contents](README.md)")
+        if i + 1 < len(chapters):
+            nav.append(f"[{int(chapters[i + 1].num)}. {chapters[i + 1].title} →]({chapters[i + 1].filename})")
+        page = "\n".join(head) + "\n".join(f"{e}  " for e in extras) + "\n\n---\n\n" + body.strip() + "\n\n---\n\n" + " · ".join(nav) + "\n"
+        (out / ch.filename).write_text(page, encoding="utf-8")
+        (out / "code" / f"{ch.num}-{ch.slug}.py").write_text(code, encoding="utf-8")
+    (out / "README.md").write_text(handbook_readme(stats), encoding="utf-8")
+    return stats
+
+
+def handbook_table(stats, prefix="handbook/"):
+    rows = []
+    part = None
+    for ch in hbm.HANDBOOK:
+        if ch.part != part:
+            part = ch.part
+            rows += ["", f"### {part}", "", "| # | Chapter | Level | Read | What you will learn |", "|---|---|---|---|---|"]
+        rows.append(f"| {int(ch.num)} | [{ch.title}]({prefix}{ch.filename}) | {ch.level} | {stats[ch.num]['minutes']} min | {ch.blurb} |")
+    return "\n".join(rows).lstrip("\n")
+
+
+def handbook_readme(stats):
+    total = sum(st["minutes"] for st in stats.values())
+    return f"""# The Hello DSA Handbook
+
+**{len(hbm.HANDBOOK)} chapters that take you from "what is a data structure?" to dynamic programming, graphs and the DSA behind AI systems**, written in the style of the video: a story first, then the idea, then the code you can run, then the cost.
+
+About {total // 60} hours of reading, plus the time you spend running and changing the code. Every chapter is self-contained enough to read on its own, but they build on each other in order.
+
+## How every problem is explained
+
+The video's habit is: *do not run after the answer; build the understanding first.* So each worked problem follows the same path:
+
+1. **The question**, in plain words, with examples.
+2. **A story** you can picture (a mirror, a teacher's diary, a wedding buffet, a pile of plates).
+3. **The smaller problem**, then **assume it works**, then **do your part** (the Hello DSA Method, [chapter 1](01-what-is-dsa.md)).
+4. **The base case** and the edge cases.
+5. **A trace or a drawn tree**, so you can see it run.
+6. **The code**, which you can run: its **output is generated by really running it** when this repo is built, so nothing here is hand-typed or out of date.
+7. **The cost**: time and space, counted rather than guessed.
+8. **Common mistakes** and **practice problems** with hints.
+
+## Contents
+
+{handbook_table(stats, prefix="")}
+
+## Choose your path
+
+| If you are... | Read |
+|---|---|
+| **Following the video** | Chapters 5 to 13 (each lists the matching timestamps), then 3 and 4 |
+| **New to DSA** | In order: 1 to 4, then 5 to 11, then 14 to 18 |
+| **Preparing for interviews** | 3, 5 to 7, 9 to 13, 14 to 22, then 23 to 27 |
+| **Struggling with recursion** | 2, 5, 6, 7, 8, then 9 and 11; draw every trace on paper |
+| **Heading into dynamic programming** | 7, 12, 13, then 25 (and 26 to compare with greedy) |
+| **Curious about AI** | 3, 18, 21, 22, then 28 |
+
+## Run the code yourself
+
+Every chapter has a runnable file in [`code/`](code/). It contains all the code of that chapter, in order:
+
+```bash
+python3 handbook/code/07-fibonacci-and-recursion-trees.py
+```
+
+The code uses only the Python standard library (3.9 or newer).
+
+## Test yourself
+
+After a chapter, try its practice problems, then the auto-checked notebooks in [`../assignments/`](../assignments/README.md): four recursion checkpoints and four practice sets covering backtracking, search, linked lists, stacks, queues, trees, heaps, graphs, dynamic programming and greedy algorithms.
+
+[Course home](../README.md) · [Roadmap](../roadmap/README.md)
+"""
+
+
 # ------------------------------------------------------------------ roadmap
 def roadmap_readme():
+    def hl(*nums):
+        return ", ".join(f"[{int(n)}](../handbook/{hbm.BY_NUM[n].filename})" for n in nums)
+
+    ac = f"{PY_REPO}/tree/main/ai-concepts"
     return f"""# DSA + AI Roadmap
 
-**A step-by-step plan to learn Data Structures and Algorithms and to use that skill in the age of AI.** Follow it from the top
-if you are new, or jump to the stage you are at. Every DSA stage links to the code and notes in this repository.
+**A step-by-step plan to learn Data Structures and Algorithms, and to use that skill in the age of AI.** Follow it from the top if you are
+new, or jump to the stage you are at. Every DSA stage links to the matching **handbook chapters**, the **video**, the **code and notes** in this
+repository, and the **practice notebooks**.
 
-[Back to the course home](../README.md)
+[Back to the course home](../README.md) · [The handbook](../handbook/README.md)
 
 ## Why DSA still matters when AI can write code
 
@@ -472,31 +582,33 @@ complexity analysis train you to do.
 - **You can judge a solution.** Is it correct for the edge cases? Is it O(n) or O(n^2)? Will it still work with a million inputs?
 - **You can debug.** Recursion, loops and data structures are where most real bugs hide.
 - **You can talk about trade-offs** in interviews and on the job.
-- **You build better AI products.** Search, caching, queues and trees sit underneath retrieval, agents and pipelines.
+- **You build better AI products.** Search, caching, queues and trees sit underneath retrieval, agents and pipelines ([handbook chapter 28](../handbook/{hbm.BY_NUM["28"].filename})).
 
 ## The two paths at a glance
 
 | Path | Goal | You will finish with |
 |---|---|---|
-| **DSA path** (stages 0 to 9) | Think and code like a problem solver | Recursion, complexity, core structures, trees and DP |
+| **DSA path** (stages 0 to 11) | Think and code like a problem solver | Recursion, complexity, every core structure, sorting, DP, greedy, patterns |
 | **AI path** (stages A to F) | Understand and build with AI | The AI vocabulary, prompting, and small AI projects |
 
 Do them side by side if you like: a few DSA problems a day plus one AI idea a week.
 
 ## DSA path
 
-| Stage | Goal | Study | Practice | Suggested pace* |
-|---|---|---|---|---|
-| 0 | Python basics | [Hello Python]({PY_REPO}) (variables to functions) | The checkpoint assignments there | 2 to 4 weeks |
-| 1 | The DSA mindset and arrays | Video {vid('2:21')} to {vid('24:38')}, [arrays](../dsa-topics/arrays/) | Rebuild a list from scratch | 3 to 5 days |
-| 2 | Time and space complexity | [Complexity notes and notebooks](../dsa-topics/time-and-space-complexity/) | Time two sorting functions on growing inputs | 1 week |
-| 3 | **Recursion** (the video) | [Introduction](../recursion/01-introduction-to-recursion/), [arrays](../recursion/02-recursion-and-arrays/), [searching and sorting](../recursion/03-searching-and-sorting/), [strings](../recursion/04-recursion-and-strings/) | The four [checkpoints](../assignments/README.md) | 2 to 3 weeks |
-| 4 | Linked list | [Linked list](../dsa-topics/linked-list/) | Insert, delete, reverse | 1 week |
-| 5 | Stack and queue | [Stack](../dsa-topics/stack/), [queue](../dsa-topics/queue/) | Balanced brackets, queue from two stacks | 1 week |
-| 6 | Hashmaps | [Hashmaps](../dsa-topics/hashmaps/) | Count frequencies, two-sum | 1 week |
-| 7 | Trees and BST | [Trees](../dsa-topics/trees/) | Traversals, height, search in a BST | 2 weeks |
-| 8 | Dynamic programming | [DP starter](../dsa-topics/dynamic-programming/) (needs recursion) | Fibonacci with memoisation, then climbing stairs | 2 to 3 weeks |
-| 9 | Keep going | Heaps, graphs, tries (not covered here yet) | Daily problems on a coding site | ongoing |
+| Stage | Goal | Read | Code, notes and video | Practice | Pace* |
+|---|---|---|---|---|---|
+| 0 | Python basics | [Hello Python]({PY_REPO}) | Functions, scope and slicing lessons | Its checkpoints | 2 to 4 weeks |
+| 1 | The DSA mindset, Python for DSA, arrays | Handbook {hl("01", "02", "14")} | Video {vid('2:21')} to {vid('24:38')}, [arrays](../dsa-topics/arrays/) | Chapter practice | 1 week |
+| 2 | Time and space complexity | Handbook {hl("03", "04")} | [Complexity notes and notebooks](../dsa-topics/time-and-space-complexity/) | Count steps yourself | 1 week |
+| 3 | **Recursion** (the video) | Handbook {hl("05", "06", "07", "08", "09", "10", "11", "12", "13")} | [Introduction](../recursion/01-introduction-to-recursion/), [arrays](../recursion/02-recursion-and-arrays/), [searching and sorting](../recursion/03-searching-and-sorting/), [strings](../recursion/04-recursion-and-strings/) | [Checkpoints](../assignments/README.md), [Set 1](../assignments/B1-backtracking-and-search.ipynb) | 3 to 4 weeks |
+| 4 | Linked lists | Handbook {hl("15")} | [Linked list](../dsa-topics/linked-list/) | [Set 2](../assignments/B2-lists-stacks-queues.ipynb) | 1 week |
+| 5 | Stacks and queues | Handbook {hl("16", "17")} | [Stack](../dsa-topics/stack/), [queue](../dsa-topics/queue/) | Set 2 | 1 week |
+| 6 | Hashmaps | Handbook {hl("18")} | [Hashmaps](../dsa-topics/hashmaps/) | [Set 3](../assignments/B3-hashmaps-trees-heaps.ipynb) | 1 week |
+| 7 | Trees and binary search trees | Handbook {hl("19", "20")} | [Trees](../dsa-topics/trees/) | Set 3 | 2 weeks |
+| 8 | Heaps and graphs | Handbook {hl("21", "22")} | The BFS and DFS ideas from stack and queue | Sets 3 and [4](../assignments/B4-graphs-dp-greedy.ipynb) | 2 weeks |
+| 9 | Sorting and binary search in depth | Handbook {hl("23", "24")} | [Merge sort and quick sort code](../recursion/03-searching-and-sorting/) | Set 1 | 1 week |
+| 10 | Dynamic programming and greedy | Handbook {hl("25", "26")} | [DP starter](../dsa-topics/dynamic-programming/) | Set 4 | 3 weeks |
+| 11 | Patterns and interviews | Handbook {hl("27")} | The whole repository | Daily problems on a coding site | ongoing |
 
 \\*A suggestion for about an hour of study a day. Finishing matters more than speed.
 
@@ -504,7 +616,7 @@ Do them side by side if you like: a few DSA problems a day plus one AI idea a we
 
 1. **Watch or read** the topic once without coding.
 2. **Code it yourself** from a blank file. Peek at the repo code only when stuck.
-3. **Do the "Try it yourself" tasks** and the checkpoint.
+3. **Do the practice problems** at the end of the chapter, then the auto-checked notebooks.
 4. **Explain it aloud** in two minutes, as if to a friend.
 5. **Redo one problem a week later** without notes. That is when it really sticks.
 
@@ -519,39 +631,49 @@ Do them side by side if you like: a few DSA problems a day plus one AI idea a we
 
 | Stage | Goal | Start here | Suggested pace* |
 |---|---|---|---|
-| A | The language of AI (LLM, tokens, RAG, MCP, agents) | [AI concepts]({PY_REPO}/tree/main/ai-concepts) | 3 to 5 days |
+| A | The language of AI (LLM, tokens, RAG, MCP, agents) | [AI concepts]({ac}) | 3 to 5 days |
 | B | Use AI well: prompting and context | The prompting and context sections in the AI concepts guide | ongoing |
 | C | Call a model from Python | A provider's official documentation, plus your Python basics | 1 week |
-| D | Give a model your own documents (RAG) | Needs hashmaps, lists and search (stages 1 to 6) | 2 weeks |
-| E | Give a model tools and let it act (MCP, agents) | Needs functions and loops (stage 0) | 2 weeks |
-| F | Evaluate, optimise and ship | Complexity and cost thinking (stage 2) | ongoing |
+| D | Give a model your own documents (RAG) | Handbook {hl("18", "21", "28")}: hashmaps, heaps, similarity search | 2 weeks |
+| E | Give a model tools and let it act (MCP, agents) | Handbook {hl("22", "28")}: graphs and plans; functions from stage 0 | 2 weeks |
+| F | Evaluate, optimise and ship | Handbook {hl("03", "28")}: complexity and cost thinking | ongoing |
 
 New to AI? The [AI roadmap for beginners]({PY_REPO}/blob/main/roadmap/README.md) in the Hello Python repo is the gentler starting point.
 
 ## How DSA shows up in AI work
 
-| DSA idea | Where you meet it in AI |
-|---|---|
-| Time and space complexity | Latency, memory and the cost of every model call and pipeline step |
-| Hashmaps | Caches, lookups, counting tokens or words, deduplication |
-| Lists and sorting | Ranking results, top-k answers, ordering retrieved passages |
-| Queues | Batching requests and background jobs |
-| Stacks and recursion | Call stacks, parsing nested JSON, walking folders and syntax trees |
-| Trees and graphs | Structured outputs, knowledge graphs, workflows and agent plans |
-| Dynamic programming | Reusing earlier results instead of recomputing them |
+| DSA idea | Where you meet it in AI work | Built in the handbook |
+|---|---|---|
+| Time and space complexity | Latency, memory and the cost of every model call and pipeline step | {hl("03", "04", "28")} |
+| Hashmaps and tries | Tokenizers, caches, lookups, deduplication | {hl("18", "28")} |
+| Heaps and sorting | Ranking results, top-k answers | {hl("21", "23", "28")} |
+| Queues | Batching requests, rate limits, background jobs | {hl("17", "28")} |
+| Stacks and recursion | Call stacks, parsing nested JSON, walking folders | {hl("05", "16")} |
+| Trees and graphs | Structured outputs, knowledge graphs, workflows and agent plans | {hl("19", "22", "28")} |
+| Dynamic programming | Edit distance, sequence comparison, reusing earlier results | {hl("25", "28")} |
 
-## A sample 12-week plan (one hour a day)
+## Pick a plan
+
+| You have | Do this |
+|---|---|
+| **2 weeks** (an interview is close) | Handbook 3, 5, 6, 9 to 12, 14 to 18, 19; Sets 1 to 3; then daily mixed problems |
+| **4 weeks** | Stages 1 to 3 and 5 to 7 at a fast pace, then handbook 27 |
+| **12 weeks** (one hour a day) | The plan below |
+| **Just curious about AI** | Handbook 1, 3, 18, 21, 22, 28, then the AI path |
+
+### A 12-week plan
 
 | Weeks | Focus |
 |---|---|
-| 1 to 2 | Python basics, [Hello Python]({PY_REPO}) lessons on functions and data structures |
-| 3 | Arrays, complexity, the AI vocabulary (stage A) |
-| 4 to 6 | Recursion: the four topics and checkpoints |
-| 7 | Linked list, stack and queue |
-| 8 | Hashmaps, plus a small RAG idea on paper (stage D) |
-| 9 to 10 | Trees and BST |
-| 11 | Dynamic programming starter |
-| 12 | Revise, then build one small project that uses a data structure and a model call |
+| 1 | Python basics refresh ([Hello Python]({PY_REPO})), handbook {hl("01", "02")}, complexity {hl("03", "04")} |
+| 2 | Arrays and hashmaps: handbook {hl("14", "18")}; AI vocabulary (stage A) |
+| 3 to 5 | **Recursion**: handbook {hl("05", "06", "07", "08", "09", "10", "11", "12", "13")}, the video, checkpoints and Set 1 |
+| 6 | Linked lists, stacks, queues: {hl("15", "16", "17")} and Set 2 |
+| 7 | Trees and BST: {hl("19", "20")} and Set 3 |
+| 8 | Heaps and graphs: {hl("21", "22")} |
+| 9 | Sorting and binary search: {hl("23", "24")} |
+| 10 to 11 | Dynamic programming and greedy: {hl("25", "26")} and Set 4 |
+| 12 | Patterns ({hl("27")}), then one small project that uses a data structure and a model call ({hl("28")}) |
 
 ## Habits that make it work
 
@@ -603,7 +725,15 @@ def subject_rows():
     return "\n".join(rows)
 
 
-def main_readme(topics_by_key, n_files, n_pdf):
+def practice_rows():
+    rows = ["| Practice set | Covers | Problems | Starter | Solutions |", "|---|---|---|---|---|"]
+    for a in asg.PRACTICE_SETS:
+        rows.append(f"| {a['title'].split(': ', 1)[1]} | {a['chapters']} | {len(a['problems'])} | "
+                    f"[notebook](assignments/{a['id']}.ipynb) | [solutions](assignments/solutions/{a['id']}.ipynb) |")
+    return "\n".join(rows)
+
+
+def main_readme(topics_by_key, n_files, n_pdf, hb_stats):
     thumb_url = ""
     watch_badge = ""
     watch_block = ""
@@ -619,16 +749,22 @@ def main_readme(topics_by_key, n_files, n_pdf):
 {watch_badge}![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-**Master Data Structures and Algorithms the visual way.** The complete code, whiteboard notes, practice and a DSA + AI roadmap
-for the **Hello DSA** video on recursion. Share your progress with **{HASHTAG}**.
+**Master Data Structures and Algorithms the visual way.** A complete **28-chapter handbook** (recursion to dynamic programming, graphs and the DSA
+behind AI), the full code and whiteboard notes from the **Hello DSA** video, auto-checked practice, and a DSA + AI roadmap.
+Share your progress with **{HASHTAG}**.
 
-> 👋 **Coming from the video?** Start with [Recursion: complete code and notes](recursion/README.md). Every chapter below links to the
-> exact code file and the notes for it. New to all of this? Follow the [DSA + AI roadmap](roadmap/README.md).
+> 👋 **Coming from the video?** Every chapter of the video links to its code file and notes in the [chapter table](#chapter-overview),
+> and the [recursion folder](recursion/README.md) has everything from the video in one place.
+>
+> 📘 **Want to go deeper than the video?** The [Hello DSA Handbook](handbook/README.md) explains every topic in the same story-first style, with runnable code.
+>
+> 🧭 **New to all of this?** Follow the [DSA + AI roadmap](roadmap/README.md).
 
 {watch_block}
 ## Contents
 
 - [Start here](#start-here) · [Set up](#set-up) · [Prerequisite](#prerequisite-python)
+- [The Hello DSA Handbook](#the-hello-dsa-handbook)
 - [What the video covers](#what-the-video-covers) · [Chapter overview](#chapter-overview)
 - [Recursion: complete code and notes](#recursion-complete-code-and-notes) · [Checkpoint assignments](#checkpoint-assignments)
 - [More DSA topics](#more-dsa-topics) · [DSA + AI roadmap](roadmap/README.md)
@@ -638,10 +774,11 @@ for the **Hello DSA** video on recursion. Share your progress with **{HASHTAG}**
 ## Start here
 
 {start_video}
-2. **Open the topic folder** for the part you are watching. Each one has the code, the notes (PDF) and a page that lists them by chapter.
-3. **Run the code yourself**, change it, and break it on purpose.
-4. **Test yourself** with the checkpoint assignments, then compare with the solutions.
-5. **Plan what comes next** with the [roadmap](roadmap/README.md).
+2. **Read the matching [handbook](handbook/README.md) chapter** for the full explanation (each chapter lists the video timestamps it covers).
+3. **Open the topic folder** for the part you are watching. Each one has the code, the notes (PDF) and a page that lists them by chapter.
+4. **Run the code yourself**, change it, and break it on purpose.
+5. **Test yourself** with the [assignments](assignments/README.md), then compare with the solutions.
+6. **Plan what comes next** with the [roadmap](roadmap/README.md).
 
 ## Set up
 
@@ -669,6 +806,16 @@ No install? Download the ZIP (*Code*, then *Download ZIP*) or upload a notebook 
 The video assumes you know Python functions, scope and slicing. If any of that is new, the free
 [Hello Python course]({PY_REPO}) covers it: [functions]({PY_REPO}/tree/main/python/37-intro-to-functions),
 [scope]({PY_REPO}/tree/main/python/41-variable-scope) and [slicing]({PY_REPO}/tree/main/python/09-concatenation-slicing).
+
+## The Hello DSA Handbook
+
+The video teaches recursion in depth. The **handbook** takes the same teaching style across the *whole* subject: foundations, recursion and
+backtracking, every core data structure, sorting and searching, dynamic programming, greedy algorithms, an interview playbook, and how it all
+shows up inside AI systems. Every code example is executed when this repository is built, so the outputs you read are real.
+
+{handbook_table(hb_stats)}
+
+[Open the handbook](handbook/README.md) for learning paths (following the video, interview preparation, struggling with recursion, and more).
 
 ## What the video covers
 
@@ -704,6 +851,12 @@ Test yourself at the end of each topic. Every problem has a check cell that tell
 The two assignments from the video (sum of digits and power) have starter files with tests and worked solutions in
 [`01-introduction-to-recursion`](recursion/01-introduction-to-recursion/).
 
+### Practice sets for the rest of the handbook
+
+More auto-checked notebooks, one set for each group of chapters:
+
+{practice_rows()}
+
 ## More DSA topics
 
 The same notes and code for the topics around recursion, so you can keep going after the video.
@@ -724,6 +877,7 @@ Links used in the video and the code, and what each one is good for.
 
 | You want | Go to |
 |---|---|
+| A full explanation of a topic, with runnable code | The [handbook](handbook/README.md) |
 | The code for a video chapter | The chapter table above, or the topic page in [`recursion/`](recursion/) |
 | The whiteboard notes (PDF) | `notes/` inside each topic, or [`recursion/notes/`](recursion/notes/) for the long notes |
 | A runnable notebook with outputs | `notebooks/` inside each topic |
@@ -741,6 +895,7 @@ Links used in the video and the code, and what each one is good for.
 ├── README.md                 you are here
 ├── INDEX.md                  every file and link in one table
 ├── requirements.txt          jupyterlab, numpy, matplotlib
+├── handbook/                 28 chapters with runnable code (handbook/code/)
 ├── roadmap/                  the DSA + AI roadmap
 ├── recursion/                the video: code, notes, notebooks
 │   ├── 01-introduction-to-recursion/   code/ notes/ notebooks/ solutions/
@@ -748,7 +903,7 @@ Links used in the video and the code, and what each one is good for.
 │   ├── 03-searching-and-sorting/
 │   ├── 04-recursion-and-strings/
 │   └── notes/                long recursion notes (PDF)
-├── assignments/              four checkpoints and solutions
+├── assignments/              four checkpoints, four practice sets and solutions
 ├── dsa-topics/               arrays, complexity, linked list, stack, queue, trees, hashmaps, DP
 └── scripts/                  maintainer tooling (learners can ignore)
 ```
@@ -756,6 +911,8 @@ Links used in the video and the code, and what each one is good for.
 The repository holds {n_files} code files and notebooks and {n_pdf} PDFs.
 
 ## FAQ
+
+**How is the handbook different from the video?** The video teaches recursion with live coding; the handbook covers the whole subject in written form with the same story-first approach, and adds backtracking, data structures, graphs, DP, greedy, patterns and DSA for AI. Each chapter says which video timestamps it matches.
 
 **Which file matches the part of the video I am on?** Use the [chapter table](#chapter-overview). It lists the code file and notes for every chapter.
 
@@ -791,8 +948,11 @@ def index_page(topics):
             ts_title = ch_for.get((t.key, ref))
             v = f"{vid(ts_title[0])} {ts_title[1]}" if ts_title else ""
             L.append(f"| {t.title} | [{Path(f.dest).name}](recursion/{t.folder}/{f.dest}) | {ICON[f.kind]} {LABEL[f.kind]} | {v} |")
+    L += ["", "## Handbook", "", "| # | Chapter | Level | Runnable code |", "|---|---|---|---|"]
+    for ch in hbm.HANDBOOK:
+        L.append(f"| {int(ch.num)} | [{ch.title}](handbook/{ch.filename}) | {ch.level} | [`{ch.num}-{ch.slug}.py`](handbook/code/{ch.num}-{ch.slug}.py) |")
     L += ["", "## Assignments", "", "| Notebook | Type |", "|---|---|"]
-    for a in asg.ASSIGNMENTS:
+    for a in asg.ASSIGNMENTS + asg.PRACTICE_SETS:
         L.append(f"| [{a['id']}](assignments/{a['id']}.ipynb) | ✏️ Assignment |")
         L.append(f"| [{a['id']} (solutions)](assignments/solutions/{a['id']}.ipynb) | ✅ Solutions |")
     L += ["", "## More DSA topics", "", "| Topic | File | Type |", "|---|---|---|"]
@@ -842,9 +1002,10 @@ Thanks for helping learners! The most useful contributions are:
 
 ## A note on the `scripts/` folder
 
-The topic pages, tables and assignment notebooks are produced by `scripts/build.py` from the original class files, so the text
-and links stay consistent. If you change a README by hand, mention it in your pull request and the maintainer will carry the
-change into the generator.
+The topic pages, tables, handbook pages and assignment notebooks are produced by `scripts/build.py` from the original class files and from
+the Markdown sources in `scripts/handbook_src/`. Code blocks in those sources are executed during the build and their outputs are inserted, so
+a handbook edit means editing the source file. This keeps the text, the outputs and the links consistent. If you change a README by
+hand, mention it in your pull request and the maintainer will carry the change into the generator.
 """
 
 
@@ -871,7 +1032,7 @@ def run_code_files(repo):
             continue
         ran += 1
         try:
-            r = subprocess.run([sys.executable, str(p)], capture_output=True, text=True, timeout=30,
+            r = subprocess.run([sys.executable, str(p)], capture_output=True, text=True, timeout=120,
                                stdin=subprocess.DEVNULL, cwd=p.parent)
             ok = r.returncode == 0
             if in_solutions:
@@ -921,7 +1082,7 @@ def verify_links(repo):
 # ------------------------------------------------------------------ main
 def build(a):
     global VIDEO_URL, OUT_ROOT
-    VIDEO_URL = a.video_url or ""
+    VIDEO_URL = a.video_url or DEFAULT_VIDEO_URL
     src, repo = Path(a.src), Path(a.repo)
     OUT_ROOT = str(repo)
     repo.mkdir(parents=True, exist_ok=True)
@@ -961,12 +1122,13 @@ def build(a):
     (repo / "roadmap").mkdir(exist_ok=True)
     (repo / "roadmap" / "README.md").write_text(roadmap_readme(), encoding="utf-8")
 
+    hb_stats = build_handbook(repo)
     n_problems = verify_assignments()
     build_assignments(repo)
 
     n_files = sum(1 for p in repo.rglob("*") if p.suffix in (".ipynb", ".py") and "scripts" not in p.relative_to(repo).parts)
     n_pdf = sum(1 for _ in repo.rglob("*.pdf"))
-    (repo / "README.md").write_text(main_readme(topics_by_key, n_files, n_pdf), encoding="utf-8")
+    (repo / "README.md").write_text(main_readme(topics_by_key, n_files, n_pdf, hb_stats), encoding="utf-8")
     (repo / "INDEX.md").write_text(index_page(topics), encoding="utf-8")
     (repo / "LICENSE").write_text(LICENSE, encoding="utf-8")
     (repo / "CONTRIBUTING.md").write_text(CONTRIBUTING, encoding="utf-8")
@@ -975,7 +1137,8 @@ def build(a):
 
     total, broken = verify_links(repo)
     ran, failures = run_code_files(repo)
-    print(f"chapters: {len(cur.CHAPTERS)} in order")
+    print(f"video chapters: {len(cur.CHAPTERS)} in order; handbook chapters: {len(hb_stats)} (every code block executed, "
+          f"{sum(st['ran'] for st in hb_stats.values())} blocks, hidden asserts included)")
     print(f"assignment problems verified (solutions pass, starters fail): {n_problems}")
     print(f"code files executed: {ran}, unexpected failures: {len(failures)}")
     for f in failures:
@@ -994,7 +1157,7 @@ def cli():
     ap = argparse.ArgumentParser()
     ap.add_argument("--src", required=True)
     ap.add_argument("--repo", required=True)
-    ap.add_argument("--video-url", default="")
+    ap.add_argument("--video-url", default=DEFAULT_VIDEO_URL)
     build(ap.parse_args())
 
 

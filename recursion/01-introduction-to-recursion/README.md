@@ -2,31 +2,33 @@
 
 Starts with what data structures and algorithms are, then builds recursion from the ground up: function calls and the call stack, factorial, the principle of mathematical induction, Fibonacci, head versus tail recursion.
 
+**Video:** starts at [`0:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=0s)
+
 ## Chapters
 
 | Time | Chapter | Code and notes |
 |------|---------|----------------|
-| `0:00` | Welcome: why DSA still matters | — |
-| `2:21` | What are data structures? | [📄 `introduction-to-data-structures.pdf`](notes/introduction-to-data-structures.pdf) |
-| `15:05` | What is an algorithm? | [📄 `introduction-to-data-structures.pdf`](notes/introduction-to-data-structures.pdf) |
-| `22:10` | Why companies and software need DSA | — |
-| `24:38` | Why we start with recursion | — |
-| `26:19` | Revision: how functions work | — |
-| `29:55` | A function calling another function (the call stack) | [💻 `01-intro-to-recursion.py`](code/01-intro-to-recursion.py) · [📄 `01-intro-to-recursion.pdf`](notes/01-intro-to-recursion.pdf) |
-| `41:40` | A function calling itself | [💻 `02-function-calling-itself.py`](code/02-function-calling-itself.py) · [📄 `02-function-calling-itself.pdf`](notes/02-function-calling-itself.pdf) |
-| `46:15` | Adding a stop: how the calls return | [💻 `02-function-calling-itself.py`](code/02-function-calling-itself.py) |
-| `48:55` | What is recursion? (the mirror analogy) | — |
-| `53:05` | Factorial: thinking recursively | [💻 `03-factorial.py`](code/03-factorial.py) · [📄 `03-factorial-and-recursion.pdf`](notes/03-factorial-and-recursion.pdf) |
-| `1:04:00` | Stack memory and stack overflow | [💻 `03-factorial.py`](code/03-factorial.py) |
-| `1:16:51` | PMI: principle of mathematical induction | [💻 `04-pmi-and-recursion.py`](code/04-pmi-and-recursion.py) · [📄 `04-understanding-pmi.pdf`](notes/04-understanding-pmi.pdf) |
-| `1:32:00` | From PMI to a recursion recipe | — |
-| `1:37:01` | Sum of the first N numbers | [💻 `05-sum-of-n-natural-numbers.py`](code/05-sum-of-n-natural-numbers.py) · [📄 `05-sum-of-natural-numbers.pdf`](notes/05-sum-of-natural-numbers.pdf) |
-| `1:46:56` | Number of digits | [💻 `06-number-of-digits.py`](code/06-number-of-digits.py) |
-| `1:55:26` | Fibonacci and the recursion tree | [💻 `07-fibonacci.py`](code/07-fibonacci.py) · [📄 `06-fibonacci-and-head-vs-tail.pdf`](notes/06-fibonacci-and-head-vs-tail.pdf) |
-| `2:21:33` | Print 1 to N and N to 1 | [💻 `08-print-1-to-n.py`](code/08-print-1-to-n.py) · [💻 `08-print-n-to-1.py`](code/08-print-n-to-1.py) |
-| `2:32:00` | Head vs tail recursion | [💻 `09-head-vs-tail-recursion.py`](code/09-head-vs-tail-recursion.py) |
-| `2:38:00` | Recursion in a classroom: kids and notebooks | — |
-| `2:43:48` | Assignments: sum of digits and power | [🧩 `10-assignment-sum-of-digits.py`](code/10-assignment-sum-of-digits.py) · [🧩 `11-assignment-power-of-a-number.py`](code/11-assignment-power-of-a-number.py) |
+| [`0:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=0s) | Welcome: why DSA still matters | — |
+| [`2:21`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=141s) | What are data structures? | [📄 `introduction-to-data-structures.pdf`](notes/introduction-to-data-structures.pdf) |
+| [`15:05`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=905s) | What is an algorithm? | [📄 `introduction-to-data-structures.pdf`](notes/introduction-to-data-structures.pdf) |
+| [`22:10`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=1330s) | Why companies and software need DSA | — |
+| [`24:38`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=1478s) | Why we start with recursion | — |
+| [`26:19`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=1579s) | Revision: how functions work | — |
+| [`29:55`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=1795s) | A function calling another function (the call stack) | [💻 `01-intro-to-recursion.py`](code/01-intro-to-recursion.py) · [📄 `01-intro-to-recursion.pdf`](notes/01-intro-to-recursion.pdf) |
+| [`41:40`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=2500s) | A function calling itself | [💻 `02-function-calling-itself.py`](code/02-function-calling-itself.py) · [📄 `02-function-calling-itself.pdf`](notes/02-function-calling-itself.pdf) |
+| [`46:15`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=2775s) | Adding a stop: how the calls return | [💻 `02-function-calling-itself.py`](code/02-function-calling-itself.py) |
+| [`48:55`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=2935s) | What is recursion? (the mirror analogy) | — |
+| [`53:05`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=3185s) | Factorial: thinking recursively | [💻 `03-factorial.py`](code/03-factorial.py) · [📄 `03-factorial-and-recursion.pdf`](notes/03-factorial-and-recursion.pdf) |
+| [`1:04:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=3840s) | Stack memory and stack overflow | [💻 `03-factorial.py`](code/03-factorial.py) |
+| [`1:16:51`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=4611s) | PMI: principle of mathematical induction | [💻 `04-pmi-and-recursion.py`](code/04-pmi-and-recursion.py) · [📄 `04-understanding-pmi.pdf`](notes/04-understanding-pmi.pdf) |
+| [`1:32:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=5520s) | From PMI to a recursion recipe | — |
+| [`1:37:01`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=5821s) | Sum of the first N numbers | [💻 `05-sum-of-n-natural-numbers.py`](code/05-sum-of-n-natural-numbers.py) · [📄 `05-sum-of-natural-numbers.pdf`](notes/05-sum-of-natural-numbers.pdf) |
+| [`1:46:56`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=6416s) | Number of digits | [💻 `06-number-of-digits.py`](code/06-number-of-digits.py) |
+| [`1:55:26`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=6926s) | Fibonacci and the recursion tree | [💻 `07-fibonacci.py`](code/07-fibonacci.py) · [📄 `06-fibonacci-and-head-vs-tail.pdf`](notes/06-fibonacci-and-head-vs-tail.pdf) |
+| [`2:21:33`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=8493s) | Print 1 to N and N to 1 | [💻 `08-print-1-to-n.py`](code/08-print-1-to-n.py) · [💻 `08-print-n-to-1.py`](code/08-print-n-to-1.py) |
+| [`2:32:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=9120s) | Head vs tail recursion | [💻 `09-head-vs-tail-recursion.py`](code/09-head-vs-tail-recursion.py) |
+| [`2:38:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=9480s) | Recursion in a classroom: kids and notebooks | — |
+| [`2:43:48`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=9828s) | Assignments: sum of digits and power | [🧩 `10-assignment-sum-of-digits.py`](code/10-assignment-sum-of-digits.py) · [🧩 `11-assignment-power-of-a-number.py`](code/11-assignment-power-of-a-number.py) |
 
 ## Files
 

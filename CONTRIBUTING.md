@@ -14,6 +14,7 @@ Thanks for helping learners! The most useful contributions are:
 
 ## A note on the `scripts/` folder
 
-The topic pages, tables and assignment notebooks are produced by `scripts/build.py` from the original class files, so the text
-and links stay consistent. If you change a README by hand, mention it in your pull request and the maintainer will carry the
-change into the generator.
+The topic pages, tables, handbook pages and assignment notebooks are produced by `scripts/build.py` from the original class files and from
+the Markdown sources in `scripts/handbook_src/`. Code blocks in those sources are executed during the build and their outputs are inserted, so
+a handbook edit means editing the source file. This keeps the text, the outputs and the links consistent. If you change a README by
+hand, mention it in your pull request and the maintainer will carry the change into the generator.
