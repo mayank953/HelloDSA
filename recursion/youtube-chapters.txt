@@ -1,0 +1,48 @@
+0:00 Welcome: why DSA still matters
+2:21 What are data structures?
+15:05 What is an algorithm?
+22:10 Why companies and software need DSA
+24:38 Why we start with recursion
+26:19 Revision: how functions work
+29:55 A function calling another function (the call stack)
+41:40 A function calling itself
+46:15 Adding a stop: how the calls return
+48:55 What is recursion? (the mirror analogy)
+53:05 Factorial: thinking recursively
+1:04:00 Stack memory and stack overflow
+1:16:51 PMI: principle of mathematical induction
+1:32:00 From PMI to a recursion recipe
+1:37:01 Sum of the first N numbers
+1:46:56 Number of digits
+1:55:26 Fibonacci and the recursion tree
+2:21:33 Print 1 to N and N to 1
+2:32:00 Head vs tail recursion
+2:38:00 Recursion in a classroom: kids and notebooks
+2:43:48 Assignments: sum of digits and power
+2:50:40 Recursion with arrays: shrinking the problem
+3:00:55 Sum of an array
+3:30:15 Check if an array is sorted
+3:54:50 First and last index of an element
+4:20:06 All indices of a number
+4:32:00 Optimisation: pass an index instead of slicing
+4:43:30 Collecting answers in a list passed down
+4:58:30 Collecting answers in a global list
+5:04:55 Returning a new list
+5:35:08 Linear search with recursion
+5:50:54 Binary search with recursion
+6:12:30 Merge sort: the idea
+6:27:56 Merge sort: the approach step by step
+6:40:05 Merge sort: code and debugging
+7:11:17 Quick sort: pivot and partition
+7:25:10 Quick sort: code
+7:46:50 Recursion with strings: remove a character
+8:03:10 Palindrome check
+8:30:09 Substring vs subsequence
+8:36:04 Print all subsequences
+8:55:10 Return all subsequences
+9:11:19 Permutations: print them
+9:34:25 Permutations: return them
+9:50:00 Return all codes
+10:28:10 Words from a phone number
+10:49:58 Tower of Hanoi
+11:08:12 Wrap-up
