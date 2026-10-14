@@ -734,51 +734,39 @@ def practice_rows():
 
 
 def main_readme(topics_by_key, n_files, n_pdf, hb_stats):
-    thumb_url = ""
     watch_badge = ""
     watch_block = ""
-    start_video = "1. **Watch** the video and use the timestamps in the [chapter table](#chapter-overview) to jump around."
     if VIDEO_URL:
         vid_id = re.search(r"v=([\w-]+)", VIDEO_URL).group(1)
         thumb_url = f"https://img.youtube.com/vi/{vid_id}/maxresdefault.jpg"
         watch_badge = f"[![Watch on YouTube](https://img.shields.io/badge/YouTube-Watch%20the%20video-red?logo=youtube&logoColor=white)]({VIDEO_URL})\n"
         watch_block = f"[![Hello DSA video]({thumb_url})]({VIDEO_URL})\n"
     chapters = chapter_table(topics_by_key, lambda t: f"recursion/{t.folder}/")
-    return f"""# Hello DSA
+    n_hb = len(hb_stats) if hasattr(hb_stats, "__len__") else 28
+    return f"""# Hello DSA: Recursion 1
 
 {watch_badge}![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-**Master Data Structures and Algorithms the visual way.** A complete **28-chapter handbook** (recursion to dynamic programming, graphs and the DSA
-behind AI), the full code and whiteboard notes from the **Hello DSA** video, auto-checked practice, and a DSA + AI roadmap.
-Share your progress with **{HASHTAG}**.
-
-> 👋 **Coming from the video?** Every chapter of the video links to its code file and notes in the [chapter table](#chapter-overview),
-> and the [recursion folder](recursion/README.md) has everything from the video in one place.
->
-> 📘 **Want to go deeper than the video?** The [Hello DSA Handbook](handbook/README.md) explains every topic in the same story-first style, with runnable code.
->
-> 🧭 **New to all of this?** Follow the [DSA + AI roadmap](roadmap/README.md).
+**The complete code, whiteboard notes (PDF), notebooks and checkpoints for the Hello DSA video.** The video introduces data structures and
+algorithms and then teaches recursion in four topics. Everything you see on screen is in the [`recursion/`](recursion/README.md) folder,
+organised in the order of the video. Share your progress with **{HASHTAG}**.
 
 {watch_block}
 ## Contents
 
 - [Start here](#start-here) · [Set up](#set-up) · [Prerequisite](#prerequisite-python)
-- [The Hello DSA Handbook](#the-hello-dsa-handbook)
-- [What the video covers](#what-the-video-covers) · [Chapter overview](#chapter-overview)
-- [Recursion: complete code and notes](#recursion-complete-code-and-notes) · [Checkpoint assignments](#checkpoint-assignments)
-- [More DSA topics](#more-dsa-topics) · [DSA + AI roadmap](roadmap/README.md)
-- [Resources explained](#resources-explained) · [Where to find everything](#where-to-find-everything)
-- [Repository layout](#repository-layout) · [FAQ](#faq)
+- [The four topics](#the-four-topics) · [Chapter overview](#chapter-overview)
+- [Checkpoint assignments](#checkpoint-assignments) · [Resources explained](#resources-explained)
+- [Where to find everything](#where-to-find-everything) · [Go further](#go-further) · [FAQ](#faq)
 
 ## Start here
 
-{start_video}
-2. **Read the matching [handbook](handbook/README.md) chapter** for the full explanation (each chapter lists the video timestamps it covers).
-3. **Open the topic folder** for the part you are watching. Each one has the code, the notes (PDF) and a page that lists them by chapter.
-4. **Run the code yourself**, change it, and break it on purpose.
-5. **Test yourself** with the [assignments](assignments/README.md), then compare with the solutions.
-6. **Plan what comes next** with the [roadmap](roadmap/README.md).
+1. **Watch** the video and use the timestamps in the [chapter table](#chapter-overview) to jump around.
+2. **Open the topic folder** for the part you are watching. Each one has the code, the notes (PDF), the notebooks and a page that lists them by chapter.
+3. **Run the code yourself**, change it, and break it on purpose.
+4. **Test yourself** with the [checkpoint assignments](assignments/README.md), then compare with the solutions.
+5. **Want more?** See [Go further](#go-further) for the handbook, other DSA topics and the roadmap.
 
 ## Set up
 
@@ -807,40 +795,19 @@ The video assumes you know Python functions, scope and slicing. If any of that i
 [Hello Python course]({PY_REPO}) covers it: [functions]({PY_REPO}/tree/main/python/37-intro-to-functions),
 [scope]({PY_REPO}/tree/main/python/41-variable-scope) and [slicing]({PY_REPO}/tree/main/python/09-concatenation-slicing).
 
-## The Hello DSA Handbook
-
-The video teaches recursion in depth. The **handbook** takes the same teaching style across the *whole* subject: foundations, recursion and
-backtracking, every core data structure, sorting and searching, dynamic programming, greedy algorithms, an interview playbook, and how it all
-shows up inside AI systems. Every code example is executed when this repository is built, so the outputs you read are real.
-
-{handbook_table(hb_stats)}
-
-[Open the handbook](handbook/README.md) for learning paths (following the video, interview preparation, struggling with recursion, and more).
-
-## What the video covers
-
-The video starts with an introduction to data structures and algorithms and then goes deep on recursion in four topics.
-
-{topic_rows()}
-
-## Chapter overview
-
-All {len(cur.CHAPTERS)} chapters, each linked to the code and notes that go with it.
-
-<details>
-<summary><b>Show the full chapter table</b></summary>
-
-{chapters}
-
-</details>
-
-## Recursion: complete code and notes
+## The four topics
 
 Open a topic to see its chapters, every code file with a description, the PDF notes with page counts, the class notebooks and practice tasks.
 
 {topic_rows()}
 
-The longer notes that run across the whole series are listed on the [recursion page](recursion/README.md#notes-that-cover-the-whole-series).
+The longer notes that run across the whole video are listed on the [recursion page](recursion/README.md#notes-that-cover-the-whole-series).
+
+## Chapter overview
+
+All {len(cur.CHAPTERS)} chapters of the video, each linked to the code and notes that go with it.
+
+{chapters}
 
 ## Checkpoint assignments
 
@@ -850,20 +817,6 @@ Test yourself at the end of each topic. Every problem has a check cell that tell
 
 The two assignments from the video (sum of digits and power) have starter files with tests and worked solutions in
 [`01-introduction-to-recursion`](recursion/01-introduction-to-recursion/).
-
-### Practice sets for the rest of the handbook
-
-More auto-checked notebooks, one set for each group of chapters:
-
-{practice_rows()}
-
-## More DSA topics
-
-The same notes and code for the topics around recursion, so you can keep going after the video.
-
-{subject_rows()}
-
-See the [DSA topics page](dsa-topics/README.md) for the suggested order, or the [roadmap](roadmap/README.md) for the full plan.
 
 ## Resources explained
 
@@ -877,16 +830,24 @@ Links used in the video and the code, and what each one is good for.
 
 | You want | Go to |
 |---|---|
-| A full explanation of a topic, with runnable code | The [handbook](handbook/README.md) |
-| The code for a video chapter | The chapter table above, or the topic page in [`recursion/`](recursion/) |
+| The code for a video chapter | The [chapter table](#chapter-overview) above, or the topic page in [`recursion/`](recursion/) |
 | The whiteboard notes (PDF) | `notes/` inside each topic, or [`recursion/notes/`](recursion/notes/) for the long notes |
 | A runnable notebook with outputs | `notebooks/` inside each topic |
 | Practice with instant feedback | [`assignments/`](assignments/README.md) |
-| Linked list, stack, queue, trees, hashmaps, complexity | [`dsa-topics/`](dsa-topics/README.md) |
-| A study plan | [`roadmap/`](roadmap/README.md) |
 | Every file and link in one table | [INDEX.md](INDEX.md) |
 
 **Tips:** PDFs open in the browser on GitHub. For long PDFs, download the file for faster scrolling. Notebook and code file names start with a number that follows the video order.
+
+## Go further
+
+Once the recursion material feels comfortable, these sections take the same teaching style across the rest of DSA.
+
+| Section | What it is |
+|---|---|
+| [Hello DSA Handbook](handbook/README.md) | {n_hb} written chapters with runnable code: recursion and backtracking in more depth, every core data structure, sorting, dynamic programming, greedy algorithms, an interview playbook and DSA behind AI. |
+| [More DSA topics](dsa-topics/README.md) | Notes and code for arrays, complexity, linked list, stack, queue, trees, hashmaps and dynamic programming. |
+| [Practice sets](assignments/README.md#practice-sets-the-rest-of-the-handbook) | Auto-checked notebooks for backtracking, binary search, lists, stacks, queues, hashmaps, trees, heaps, graphs, DP and greedy. |
+| [DSA + AI roadmap](roadmap/README.md) | A step-by-step study plan from your first loop to DSA for AI systems, with a 12-week schedule. |
 
 ## Repository layout
 
@@ -895,24 +856,22 @@ Links used in the video and the code, and what each one is good for.
 ├── README.md                 you are here
 ├── INDEX.md                  every file and link in one table
 ├── requirements.txt          jupyterlab, numpy, matplotlib
-├── handbook/                 28 chapters with runnable code (handbook/code/)
-├── roadmap/                  the DSA + AI roadmap
 ├── recursion/                the video: code, notes, notebooks
 │   ├── 01-introduction-to-recursion/   code/ notes/ notebooks/ solutions/
 │   ├── 02-recursion-and-arrays/
 │   ├── 03-searching-and-sorting/
 │   ├── 04-recursion-and-strings/
 │   └── notes/                long recursion notes (PDF)
-├── assignments/              four checkpoints, four practice sets and solutions
+├── assignments/              checkpoints for the video, plus further practice sets and solutions
+├── handbook/                 {n_hb} chapters with runnable code
 ├── dsa-topics/               arrays, complexity, linked list, stack, queue, trees, hashmaps, DP
+├── roadmap/                  the DSA + AI roadmap
 └── scripts/                  maintainer tooling (learners can ignore)
 ```
 
 The repository holds {n_files} code files and notebooks and {n_pdf} PDFs.
 
 ## FAQ
-
-**How is the handbook different from the video?** The video teaches recursion with live coding; the handbook covers the whole subject in written form with the same story-first approach, and adds backtracking, data structures, graphs, DP, greedy, patterns and DSA for AI. Each chapter says which video timestamps it matches.
 
 **Which file matches the part of the video I am on?** Use the [chapter table](#chapter-overview). It lists the code file and notes for every chapter.
 

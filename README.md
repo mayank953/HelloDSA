@@ -1,40 +1,29 @@
-# Hello DSA
+# Hello DSA: Recursion 1
 
 [![Watch on YouTube](https://img.shields.io/badge/YouTube-Watch%20the%20video-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=BhaHEnpNujI)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-**Master Data Structures and Algorithms the visual way.** A complete **28-chapter handbook** (recursion to dynamic programming, graphs and the DSA
-behind AI), the full code and whiteboard notes from the **Hello DSA** video, auto-checked practice, and a DSA + AI roadmap.
-Share your progress with **#HelloDSA**.
-
-> 👋 **Coming from the video?** Every chapter of the video links to its code file and notes in the [chapter table](#chapter-overview),
-> and the [recursion folder](recursion/README.md) has everything from the video in one place.
->
-> 📘 **Want to go deeper than the video?** The [Hello DSA Handbook](handbook/README.md) explains every topic in the same story-first style, with runnable code.
->
-> 🧭 **New to all of this?** Follow the [DSA + AI roadmap](roadmap/README.md).
+**The complete code, whiteboard notes (PDF), notebooks and checkpoints for the Hello DSA video.** The video introduces data structures and
+algorithms and then teaches recursion in four topics. Everything you see on screen is in the [`recursion/`](recursion/README.md) folder,
+organised in the order of the video. Share your progress with **#HelloDSA**.
 
 [![Hello DSA video](https://img.youtube.com/vi/BhaHEnpNujI/maxresdefault.jpg)](https://www.youtube.com/watch?v=BhaHEnpNujI)
 
 ## Contents
 
 - [Start here](#start-here) · [Set up](#set-up) · [Prerequisite](#prerequisite-python)
-- [The Hello DSA Handbook](#the-hello-dsa-handbook)
-- [What the video covers](#what-the-video-covers) · [Chapter overview](#chapter-overview)
-- [Recursion: complete code and notes](#recursion-complete-code-and-notes) · [Checkpoint assignments](#checkpoint-assignments)
-- [More DSA topics](#more-dsa-topics) · [DSA + AI roadmap](roadmap/README.md)
-- [Resources explained](#resources-explained) · [Where to find everything](#where-to-find-everything)
-- [Repository layout](#repository-layout) · [FAQ](#faq)
+- [The four topics](#the-four-topics) · [Chapter overview](#chapter-overview)
+- [Checkpoint assignments](#checkpoint-assignments) · [Resources explained](#resources-explained)
+- [Where to find everything](#where-to-find-everything) · [Go further](#go-further) · [FAQ](#faq)
 
 ## Start here
 
 1. **Watch** the video and use the timestamps in the [chapter table](#chapter-overview) to jump around.
-2. **Read the matching [handbook](handbook/README.md) chapter** for the full explanation (each chapter lists the video timestamps it covers).
-3. **Open the topic folder** for the part you are watching. Each one has the code, the notes (PDF) and a page that lists them by chapter.
-4. **Run the code yourself**, change it, and break it on purpose.
-5. **Test yourself** with the [assignments](assignments/README.md), then compare with the solutions.
-6. **Plan what comes next** with the [roadmap](roadmap/README.md).
+2. **Open the topic folder** for the part you are watching. Each one has the code, the notes (PDF), the notebooks and a page that lists them by chapter.
+3. **Run the code yourself**, change it, and break it on purpose.
+4. **Test yourself** with the [checkpoint assignments](assignments/README.md), then compare with the solutions.
+5. **Want more?** See [Go further](#go-further) for the handbook, other DSA topics and the roadmap.
 
 ## Set up
 
@@ -63,70 +52,9 @@ The video assumes you know Python functions, scope and slicing. If any of that i
 [Hello Python course](https://github.com/mayank953/python-ai-crash-course) covers it: [functions](https://github.com/mayank953/python-ai-crash-course/tree/main/python/37-intro-to-functions),
 [scope](https://github.com/mayank953/python-ai-crash-course/tree/main/python/41-variable-scope) and [slicing](https://github.com/mayank953/python-ai-crash-course/tree/main/python/09-concatenation-slicing).
 
-## The Hello DSA Handbook
+## The four topics
 
-The video teaches recursion in depth. The **handbook** takes the same teaching style across the *whole* subject: foundations, recursion and
-backtracking, every core data structure, sorting and searching, dynamic programming, greedy algorithms, an interview playbook, and how it all
-shows up inside AI systems. Every code example is executed when this repository is built, so the outputs you read are real.
-
-### Part 1: Foundations
-
-| # | Chapter | Level | Read | What you will learn |
-|---|---|---|---|---|
-| 1 | [What Are Data Structures and Algorithms?](handbook/01-what-is-dsa.md) | Beginner | 8 min | Why DSA still matters, what a data structure and an algorithm really are, and the eight-step Hello DSA Method you will reuse on every problem. |
-| 2 | [Python You Need for DSA](handbook/02-python-for-dsa.md) | Beginner | 6 min | How a function call really works in memory (the call stack), references and mutability, slicing costs, and the Python habits that make DSA code clean. |
-| 3 | [Time Complexity: Counting the Work](handbook/03-time-complexity.md) | Beginner | 9 min | Count steps instead of seconds. Big-O from first principles, loops, nested loops, logarithms, best and worst case, with exact step counts. |
-| 4 | [Space Complexity: Counting the Memory](handbook/04-space-complexity.md) | Intermediate | 7 min | Auxiliary space, the memory a recursion uses, the hidden cost of slicing, and the time versus space trade-off. |
-
-### Part 2: Recursion
-
-| # | Chapter | Level | Read | What you will learn |
-|---|---|---|---|---|
-| 5 | [Recursion From Scratch](handbook/05-recursion-from-scratch.md) | Beginner | 9 min | A function calling itself: the mirror story, the call stack frame by frame, the base case, stack overflow and Python's recursion limit. |
-| 6 | [PMI and the Recursion Recipe](handbook/06-pmi-and-the-recursion-recipe.md) | Beginner | 10 min | Why recursion works (mathematical induction) and the three-part recipe: base case, assume, do your part. Applied to sum, power, digits and GCD. |
-| 7 | [Fibonacci and Recursion Trees](handbook/07-fibonacci-and-recursion-trees.md) | Intermediate | 7 min | Draw the recursion tree, count the calls, see why naive Fibonacci explodes, and meet memoization for the first time. |
-| 8 | [Head vs Tail Recursion and the Order of Work](handbook/08-head-vs-tail-recursion.md) | Intermediate | 7 min | Why swapping two lines flips the output, the print 1 to N and N to 1 pair, tail recursion with an accumulator, and what Python does (and does not do) about it. |
-| 9 | [Recursion on Arrays](handbook/09-recursion-on-arrays.md) | Intermediate | 9 min | Shrink the list by one, trust the recursive call, combine. Sum, sorted check, first and last index, and the four ways to return many answers. |
-| 10 | [Searching and Sorting with Recursion](handbook/10-searching-and-sorting-with-recursion.md) | Intermediate | 10 min | Linear and binary search, merge sort (divide, conquer, merge) and quick sort (pivot and partition), with the recurrences that give their running time. |
-| 11 | [Recursion on Strings](handbook/11-recursion-on-strings.md) | Intermediate | 7 min | Remove a character, palindromes, and the take-or-skip idea behind subsequences, with the wedding-plate story. |
-| 12 | [The Choices Tree: Permutations, Codes, Keypads and Hanoi](handbook/12-the-choices-tree.md) | Advanced | 11 min | Problems where every step offers several choices. Permutations, decoding digit strings, phone keypad words, and the Tower of Hanoi. |
-| 13 | [Backtracking: Choose, Explore, Undo](handbook/13-backtracking.md) | Advanced | 9 min | The pattern behind N-Queens, subsets with a target sum, combinations, balanced brackets and maze paths. Choose, explore, undo. |
-
-### Part 3: Data Structures
-
-| # | Chapter | Level | Read | What you will learn |
-|---|---|---|---|---|
-| 14 | [Arrays and Lists](handbook/14-arrays-and-lists.md) | Beginner | 8 min | How a dynamic array works, why append is cheap on average, and the patterns every array question uses: prefix sums, two pointers, sliding window, Kadane. |
-| 15 | [Linked Lists](handbook/15-linked-list.md) | Intermediate | 8 min | Nodes and pointers, insert and delete, reversing, the slow and fast pointer trick, cycle detection and merging, with the recursion view. |
-| 16 | [Stacks](handbook/16-stack.md) | Intermediate | 8 min | Last in, first out: implementation, balanced brackets, the monotonic stack, evaluating expressions, and why recursion is a stack in disguise. |
-| 17 | [Queues and Deques](handbook/17-queue-and-deque.md) | Intermediate | 6 min | First in, first out: circular queues, deques, a queue from two stacks, and the sliding window maximum. |
-| 18 | [Hashmaps](handbook/18-hashmaps.md) | Intermediate | 8 min | Hash functions, collisions, chaining and linear probing, load factor, and the classic patterns: frequency counting, two-sum, grouping anagrams. |
-| 19 | [Trees and Binary Trees](handbook/19-trees.md) | Intermediate | 9 min | Tree vocabulary, recursive thinking on trees, the four traversals, height, diameter, and the questions that use them. |
-| 20 | [Binary Search Trees](handbook/20-binary-search-trees.md) | Intermediate | 8 min | Search, insert and delete in a BST, validating one, finding the lowest common ancestor, and why balance matters. |
-| 21 | [Heaps and Priority Queues](handbook/21-heaps.md) | Intermediate | 8 min | The always-ready minimum: heapify, push and pop, heap sort, and top-k problems with Python's heapq. |
-| 22 | [Graphs](handbook/22-graphs.md) | Advanced | 10 min | Representations, breadth-first and depth-first search, connected components, cycle detection, topological sort and shortest paths. |
-
-### Part 4: Algorithms
-
-| # | Chapter | Level | Read | What you will learn |
-|---|---|---|---|---|
-| 23 | [Sorting Algorithms Compared](handbook/23-sorting-compared.md) | Intermediate | 8 min | Bubble, selection, insertion, merge, quick and counting sort side by side: how they work, what they cost, which are stable. |
-| 24 | [Binary Search Beyond Sorted Arrays](handbook/24-binary-search-beyond.md) | Advanced | 8 min | Lower and upper bound, rotated arrays, and binary search on the answer. |
-| 25 | [Dynamic Programming](handbook/25-dynamic-programming.md) | Advanced | 12 min | From recursion with a memory to tables: climbing stairs, house robber, coin change, knapsack, longest common subsequence, edit distance. |
-| 26 | [Greedy Algorithms](handbook/26-greedy.md) | Intermediate | 10 min | Pick the best-looking choice at every step, when that is provably enough, and when it quietly fails. |
-| 27 | [Patterns and the Interview Playbook](handbook/27-patterns-and-interview-playbook.md) | Intermediate | 11 min | Eleven patterns that cover most questions, a checklist for the first five minutes of an interview, and a practice plan. |
-
-### Part 5: DSA in the AI Era
-
-| # | Chapter | Level | Read | What you will learn |
-|---|---|---|---|---|
-| 28 | [DSA Behind AI](handbook/28-dsa-behind-ai.md) | Intermediate | 10 min | Top-k with a heap, similarity search, LRU caches, tries for tokenizers, graphs for knowledge, queues for batching, and cost thinking for model calls. |
-
-[Open the handbook](handbook/README.md) for learning paths (following the video, interview preparation, struggling with recursion, and more).
-
-## What the video covers
-
-The video starts with an introduction to data structures and algorithms and then goes deep on recursion in four topics.
+Open a topic to see its chapters, every code file with a description, the PDF notes with page counts, the class notebooks and practice tasks.
 
 | # | Topic | Starts at | What you get |
 |---|---|---|---|
@@ -135,12 +63,11 @@ The video starts with an introduction to data structures and algorithms and then
 | 3 | [Searching and Sorting with Recursion](recursion/03-searching-and-sorting/) | [`5:35:08`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=20108s) | 6 code files, 0 PDFs, 3 notebooks, a checkpoint |
 | 4 | [Recursion and Strings](recursion/04-recursion-and-strings/) | [`7:46:50`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=28010s) | 10 code files, 1 PDF, 7 notebooks, a checkpoint |
 
+The longer notes that run across the whole video are listed on the [recursion page](recursion/README.md#notes-that-cover-the-whole-series).
+
 ## Chapter overview
 
-All 48 chapters, each linked to the code and notes that go with it.
-
-<details>
-<summary><b>Show the full chapter table</b></summary>
+All 48 chapters of the video, each linked to the code and notes that go with it.
 
 | Time | Chapter | Code and notes |
 |------|---------|----------------|
@@ -193,21 +120,6 @@ All 48 chapters, each linked to the code and notes that go with it.
 | [`10:49:58`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=38998s) | Tower of Hanoi | [💻 `10-tower-of-hanoi.py`](recursion/04-recursion-and-strings/code/10-tower-of-hanoi.py) |
 | [`11:08:12`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=40092s) | Wrap-up | — |
 
-</details>
-
-## Recursion: complete code and notes
-
-Open a topic to see its chapters, every code file with a description, the PDF notes with page counts, the class notebooks and practice tasks.
-
-| # | Topic | Starts at | What you get |
-|---|---|---|---|
-| 1 | [Introduction to Recursion](recursion/01-introduction-to-recursion/) | [`0:00`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=0s) | 12 code files, 9 PDFs, 2 notebooks, a checkpoint |
-| 2 | [Recursion and Arrays](recursion/02-recursion-and-arrays/) | [`2:50:40`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=10240s) | 7 code files, 1 PDF, 1 notebook, a checkpoint |
-| 3 | [Searching and Sorting with Recursion](recursion/03-searching-and-sorting/) | [`5:35:08`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=20108s) | 6 code files, 0 PDFs, 3 notebooks, a checkpoint |
-| 4 | [Recursion and Strings](recursion/04-recursion-and-strings/) | [`7:46:50`](https://www.youtube.com/watch?v=BhaHEnpNujI&t=28010s) | 10 code files, 1 PDF, 7 notebooks, a checkpoint |
-
-The longer notes that run across the whole series are listed on the [recursion page](recursion/README.md#notes-that-cover-the-whole-series).
-
 ## Checkpoint assignments
 
 Test yourself at the end of each topic. Every problem has a check cell that tells you instantly whether you got it right, and whether you really used recursion.
@@ -221,34 +133,6 @@ Test yourself at the end of each topic. Every problem has a check cell that tell
 
 The two assignments from the video (sum of digits and power) have starter files with tests and worked solutions in
 [`01-introduction-to-recursion`](recursion/01-introduction-to-recursion/).
-
-### Practice sets for the rest of the handbook
-
-More auto-checked notebooks, one set for each group of chapters:
-
-| Practice set | Covers | Problems | Starter | Solutions |
-|---|---|---|---|---|
-| Backtracking and Binary Search | Handbook chapters 13 and 24 | 6 | [notebook](assignments/B1-backtracking-and-search.ipynb) | [solutions](assignments/solutions/B1-backtracking-and-search.ipynb) |
-| Linked Lists, Stacks and Queues | Handbook chapters 15 to 17 | 6 | [notebook](assignments/B2-lists-stacks-queues.ipynb) | [solutions](assignments/solutions/B2-lists-stacks-queues.ipynb) |
-| Hashmaps, Trees and Heaps | Handbook chapters 18 to 21 | 7 | [notebook](assignments/B3-hashmaps-trees-heaps.ipynb) | [solutions](assignments/solutions/B3-hashmaps-trees-heaps.ipynb) |
-| Graphs, Dynamic Programming and Greedy | Handbook chapters 22, 25 and 26 | 7 | [notebook](assignments/B4-graphs-dp-greedy.ipynb) | [solutions](assignments/solutions/B4-graphs-dp-greedy.ipynb) |
-
-## More DSA topics
-
-The same notes and code for the topics around recursion, so you can keep going after the video.
-
-| Topic | What's inside | Files |
-|---|---|---|
-| [Arrays](dsa-topics/arrays/) | How arrays work under the hood: a short set of notes and a notebook that builds a dynamic array (a Python-list look-alike) from scratch with `ctypes`. | 1 code file or notebook, 1 PDF |
-| [Time and Space Complexity](dsa-topics/time-and-space-complexity/) | Big-O in practice: how to count the work an algorithm does, why growth rate matters on large inputs, and how recursion uses memory. Notebooks time real code (merge sort against bubble sort) and plot the growth. | 10 code file or notebooks, 4 PDFs |
-| [Linked List](dsa-topics/linked-list/) | Build a singly linked list step by step: the node, taking input, length, insert, delete and search, each written iteratively and recursively. The complete code notebook puts everything in one place. | 9 code file or notebooks, 4 PDFs |
-| [Stack](dsa-topics/stack/) | The last-in, first-out structure, built on a list, an array, a dynamic array and a linked list. | 1 code file or notebook, 1 PDF |
-| [Queue](dsa-topics/queue/) | The first-in, first-out structure, built on an array, a list and a linked list. | 1 code file or notebook, 1 PDF |
-| [Trees](dsa-topics/trees/) | Generic trees, binary trees and binary search trees: nodes, traversals (inorder, preorder), and BST operations, nearly all of them recursive. | 5 code file or notebooks, 5 PDFs |
-| [Hashmaps](dsa-topics/hashmaps/) | Hash tables from the ground up: hashing, collisions, and open addressing with linear probing. | 2 code file or notebooks, 1 PDF |
-| [Dynamic Programming](dsa-topics/dynamic-programming/) | A starting point for dynamic programming: the prerequisites (recursion, lists, 2D lists, indexing) and the Fibonacci recursion that DP optimises. | 1 code file or notebook, 0 PDFs |
-
-See the [DSA topics page](dsa-topics/README.md) for the suggested order, or the [roadmap](roadmap/README.md) for the full plan.
 
 ## Resources explained
 
@@ -274,16 +158,24 @@ Links used in the video and the code, and what each one is good for.
 
 | You want | Go to |
 |---|---|
-| A full explanation of a topic, with runnable code | The [handbook](handbook/README.md) |
-| The code for a video chapter | The chapter table above, or the topic page in [`recursion/`](recursion/) |
+| The code for a video chapter | The [chapter table](#chapter-overview) above, or the topic page in [`recursion/`](recursion/) |
 | The whiteboard notes (PDF) | `notes/` inside each topic, or [`recursion/notes/`](recursion/notes/) for the long notes |
 | A runnable notebook with outputs | `notebooks/` inside each topic |
 | Practice with instant feedback | [`assignments/`](assignments/README.md) |
-| Linked list, stack, queue, trees, hashmaps, complexity | [`dsa-topics/`](dsa-topics/README.md) |
-| A study plan | [`roadmap/`](roadmap/README.md) |
 | Every file and link in one table | [INDEX.md](INDEX.md) |
 
 **Tips:** PDFs open in the browser on GitHub. For long PDFs, download the file for faster scrolling. Notebook and code file names start with a number that follows the video order.
+
+## Go further
+
+Once the recursion material feels comfortable, these sections take the same teaching style across the rest of DSA.
+
+| Section | What it is |
+|---|---|
+| [Hello DSA Handbook](handbook/README.md) | 28 written chapters with runnable code: recursion and backtracking in more depth, every core data structure, sorting, dynamic programming, greedy algorithms, an interview playbook and DSA behind AI. |
+| [More DSA topics](dsa-topics/README.md) | Notes and code for arrays, complexity, linked list, stack, queue, trees, hashmaps and dynamic programming. |
+| [Practice sets](assignments/README.md#practice-sets-the-rest-of-the-handbook) | Auto-checked notebooks for backtracking, binary search, lists, stacks, queues, hashmaps, trees, heaps, graphs, DP and greedy. |
+| [DSA + AI roadmap](roadmap/README.md) | A step-by-step study plan from your first loop to DSA for AI systems, with a 12-week schedule. |
 
 ## Repository layout
 
@@ -292,24 +184,22 @@ HelloDSA/
 ├── README.md                 you are here
 ├── INDEX.md                  every file and link in one table
 ├── requirements.txt          jupyterlab, numpy, matplotlib
-├── handbook/                 28 chapters with runnable code (handbook/code/)
-├── roadmap/                  the DSA + AI roadmap
 ├── recursion/                the video: code, notes, notebooks
 │   ├── 01-introduction-to-recursion/   code/ notes/ notebooks/ solutions/
 │   ├── 02-recursion-and-arrays/
 │   ├── 03-searching-and-sorting/
 │   ├── 04-recursion-and-strings/
 │   └── notes/                long recursion notes (PDF)
-├── assignments/              four checkpoints, four practice sets and solutions
+├── assignments/              checkpoints for the video, plus further practice sets and solutions
+├── handbook/                 28 chapters with runnable code
 ├── dsa-topics/               arrays, complexity, linked list, stack, queue, trees, hashmaps, DP
+├── roadmap/                  the DSA + AI roadmap
 └── scripts/                  maintainer tooling (learners can ignore)
 ```
 
 The repository holds 124 code files and notebooks and 34 PDFs.
 
 ## FAQ
-
-**How is the handbook different from the video?** The video teaches recursion with live coding; the handbook covers the whole subject in written form with the same story-first approach, and adds backtracking, data structures, graphs, DP, greedy, patterns and DSA for AI. Each chapter says which video timestamps it matches.
 
 **Which file matches the part of the video I am on?** Use the [chapter table](#chapter-overview). It lists the code file and notes for every chapter.
 
